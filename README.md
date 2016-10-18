@@ -72,3 +72,8 @@ See the `Jackson` Java/JSON library
 
 See the `vorpal` JavaScript/CLI library
  - Specifically, look at `mode` and `command`
+
+persons 0 & 1 senders
+send message at same time
+
+recievers users messages should appear in the same order for every user.

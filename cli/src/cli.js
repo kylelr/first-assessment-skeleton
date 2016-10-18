@@ -30,7 +30,7 @@ cli
     })
   })
   .action(function (input, callback) {
-    const [ command, ...rest ] = words(input)
+    const [ command, ...rest ] = words (input, /[^, ]+/g)
     const contents = rest.join(' ')
 
     if (command === 'disconnect') {

@@ -5,7 +5,9 @@ public class Message {
 	private String username;
 	private String command;
 	private String contents;
-
+//List to contain currently connected users
+	
+	
 	public String getUsername() {
 		return username;
 	}

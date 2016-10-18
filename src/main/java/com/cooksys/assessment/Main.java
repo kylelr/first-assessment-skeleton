@@ -1,5 +1,6 @@
 package com.cooksys.assessment;
 
+import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import com.cooksys.assessment.server.Server;
 
 public class Main {
+	
+	//Add a time stamp object. removed
+	
 	private static Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static void main(String[] args) {
