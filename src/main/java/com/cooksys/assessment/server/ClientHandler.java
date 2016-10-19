@@ -15,9 +15,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ClientHandler implements Runnable {
 	private Logger log = LoggerFactory.getLogger(ClientHandler.class);
-
+	
+	
 	private Socket socket;
-
+	///create a concurrentHashMap to hold UserNames for Broadcast and users commands. 
 	public ClientHandler(Socket socket) {
 		super();
 		this.socket = socket;
@@ -34,6 +35,7 @@ public class ClientHandler implements Runnable {
 				String raw = reader.readLine();
 				Message message = mapper.readValue(raw, Message.class);
 
+				
 				switch (message.getCommand()) {
 					case "connect":
 						log.info("user <{}> connected", message.getUsername());
@@ -48,6 +50,26 @@ public class ClientHandler implements Runnable {
 						writer.write(response);
 						writer.flush();
 						break;
+						//Add cases for additional commands: broadcast, @user and users. commit 1.4 
+					case "broadcast":
+						log.info("user <{}> says <{}>", message.getUsername(), message.getContents());
+						String tellAll = mapper.writeValueAsString(message);
+						writer.write(tellAll);
+						writer.flush();
+						break;
+					case "@user":
+						log.info("user <{}> whispered <{}>", message.getUsername(), message.getContents());
+						String tell = mapper.writeValueAsString(message);
+						writer.write(tell);
+						writer.flush();
+						break;
+					case "users":
+						log.info("active users <{}>", message.getUsername(), message.getContents());
+						String currentUsers = mapper.writeValueAsString(message);
+						writer.write(currentUsers);
+						writer.flush();
+						break;
+				
 				}
 			}
 
