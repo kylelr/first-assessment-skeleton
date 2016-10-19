@@ -32,11 +32,17 @@ cli
   .action(function (input, callback) {
     const [ command, ...rest ] = words (input, /[^, ]+/g)
     const contents = rest.join(' ')
-
+// added server.write commands for broadcast, @username and users.
     if (command === 'disconnect') {
       server.end(new Message({ username, command }).toJSON() + '\n')
     } else if (command === 'echo') {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
+    } else if (command === 'broadcast') {
+      server.write(new Message({ username, command, contents }).toJSON() + '\n')
+    } else if (command === '@username') {
+      server.write(new Message({ username, command, contents }).toJSON() + '\n')
+    } else if (command === 'users') {
+     server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else {
       this.log(`Command <${command}> was not recognized`)
     }
