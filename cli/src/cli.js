@@ -24,7 +24,7 @@ cli
       server.write(new Message({ username, command: 'connect' }).toJSON() + '\n')
       callback()
     })
-
+//experimenting we adding the time stamp here.
     server.on('data', (buffer) => {
       this.log(Message.fromJSON(buffer).toString())
     })
@@ -43,10 +43,10 @@ cli
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else if (command === 'broadcast') {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
-    } else if (command === '@username') {
+    } else if (command.startsWith('@')) {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else if (command === 'users') {
-      server.write(new Message({ username, command, contents }).toJSON() + '\n')
+      server.write(new Message({ username, command }).toJSON() + '\n')
     } else {
       this.log(`Command <${command}> was not recognized`)
     }

@@ -33,6 +33,8 @@ public class Server implements Runnable {
 		} catch (IOException e) {
 			log.error("Something went wrong :/", e);
 		}
+		
+		
 	}
 
 }
