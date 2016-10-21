@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,10 @@ public class ClientHandler implements Runnable {
 	public ClientHandler(Socket socket) {
 		super();
 		this.socket = socket;
+		DateTimeFormatter timeStamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+		
+		
+	
 	}
 
 	public void run() {
@@ -45,10 +51,12 @@ public class ClientHandler implements Runnable {
 					case "connect":
 						log.info("user <{}> connected", message.getUsername());
 						ClientHandlerMap.addUser(message.getUsername(), socket);
+						ClientHandlerMap.userConnection(message);
 						break;
 					case "disconnect":
 						log.info("user <{}> disconnected", message.getUsername());		
 						ClientHandlerMap.removeUser(message.getUsername());
+						ClientHandlerMap.userConnection( message);
 						this.socket.close();
 						break;
 					case "echo":
@@ -60,20 +68,19 @@ public class ClientHandler implements Runnable {
 						//Added cases for additional commands: broadcast, @user and users. commit which still need to be accurately implemented 1.4 
 					case "broadcast":
 						log.info("user <{}> says <{}>", message.getUsername(), message.getContents());
-						String tellAll = mapper.writeValueAsString(message);
-						writer.write(tellAll);
-						writer.flush();
+						ClientHandlerMap.broadcastMessageToAllUsers(message);
 						break;
 					case "@":
 						log.info("user <{}> whispered <{}>", message.getUsername(), "\nContents: " + message.getContents() + "!!!");
-						String tell = mapper.writeValueAsString(message);
-						writer.write(tell);
-						writer.flush();
+						
+						ClientHandlerMap.tellUser(message);
 						break;
 					case "users":
 						log.info("currently connected users: <{}>", message.getUsername(), message.getContents());
-						String currentUsers = mapper.writeValueAsString(message);
-						writer.write(currentUsers);
+						message.setContents(ClientHandlerMap.listUsers());
+						writer.write(mapper.writeValueAsString(MessageFormatMachine.getFormattedMessage(message)).toString());
+						//String currentUsers = mapper.writeValueAsString(message);
+						//writer.write(currentUsers);
 						writer.flush();
 						break;
 				

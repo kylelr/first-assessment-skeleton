@@ -5,8 +5,8 @@ import { Message } from './Message'
 
 export const cli = vorpal()
 // set host and port Commit 1.3
-let host
-let port
+let host = host
+let port = port
 let username
 let server
 
@@ -24,7 +24,7 @@ cli
       server.write(new Message({ username, command: 'connect' }).toJSON() + '\n')
       callback()
     })
-//experimenting we adding the time stamp here.
+// experimenting with adding the time stamp here.
     server.on('data', (buffer) => {
       this.log(Message.fromJSON(buffer).toString())
     })
@@ -38,7 +38,7 @@ cli
     const contents = rest.join(' ')
 // added server.write commands for broadcast, @username and users. Commit 1.2
     if (command === 'disconnect') {
-      server.end(new Message({ username, command }).toJSON() + '\n')
+      server.end(new Message({ username, command, contents }).toJSON() + '\n')
     } else if (command === 'echo') {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else if (command === 'broadcast') {
@@ -46,7 +46,7 @@ cli
     } else if (command.startsWith('@')) {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else if (command === 'users') {
-      server.write(new Message({ username, command }).toJSON() + '\n')
+      server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else {
       this.log(`Command <${command}> was not recognized`)
     }
