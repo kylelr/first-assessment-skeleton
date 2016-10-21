@@ -49,8 +49,6 @@ public class MessageFormatMachine {
 				newMessage.setCommand(Command);
 				newMessage.setContents(sb.toString());
 				
-				
-				
 			}  else {
 				newMessage.setUsername(UserName);
 				newMessage.setCommand(Command);
@@ -63,18 +61,13 @@ public class MessageFormatMachine {
 					sb.append("<${" + users[i] +"}>\n");
 				}
 				
-				newMessage.setContents(sb.toString());
-				
+				newMessage.setContents(sb.toString());		
 			}
 			
 			//String timeStamp = DateFormat.getTimeInstance().toString();
 			log.info("Command: " + newMessage.getCommand());
-			
 	
-			
-			
 		}
-		
 		return newMessage;
 	}
 	

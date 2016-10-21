@@ -20,7 +20,7 @@ cli
     host = args.host
     port = args.port
     username = args.username
-    server = connect({ host: 'localhost', port: 8080 }, () => {
+    server = connect({ host: host, port: port }, () => {
       server.write(new Message({ username, command: 'connect' }).toJSON() + '\n')
       callback()
     })

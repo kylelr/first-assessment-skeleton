@@ -26,8 +26,6 @@ public class ClientHandler implements Runnable {
 		this.socket = socket;
 		DateTimeFormatter timeStamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		
-		
-	
 	}
 
 	public void run() {
